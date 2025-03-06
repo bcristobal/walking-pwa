@@ -1,0 +1,11 @@
+---
+
+import LayoutMap from "../../layouts/LayoutMap.astro";
+import MyMap  from "../../components/map/MyMap";
+---
+
+<LayoutMap>
+    <MyMap client:only="react"></MyMap>
+</LayoutMap>
+    
+

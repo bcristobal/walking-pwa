@@ -1,0 +1,26 @@
+---
+import styles from './hero.module.css';
+---
+
+<section class={styles.heroSection}>
+    <div class={styles.content}>
+        <div class={styles.left}>
+            <h1 class={styles.title}>
+                Ibilitzen
+            </h1>
+            <p class={styles.text}>
+                ¡Muévete, gana y disfruta! Únete a nuestra app y transforma tu movilidad activa en recompensas. Acepta desafíos, suma kilómetros y canjea premios mientras cuidas tu salud y el planeta.
+            </p>
+            <div class={styles.buttons}>
+                <a class={styles.login} href="#login">Empieza ya</a>
+                <a class={styles.secondary} href="#conocemas">Conoce más</a>
+            </div>
+        </div>
+
+        <div class={styles.right}>
+            <div class={styles.imageContainer}>
+                <img src="/person_walking.webp" alt="Una persona caminando" class={styles.heroImage}>
+            </div>
+        </div>
+    </div>
+</section>
