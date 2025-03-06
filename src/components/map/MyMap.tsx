@@ -29,6 +29,8 @@ const MyMap = () => {
         setCurrentPosition([latitude, longitude]);
         console.log("latutude:" + latitude + " and longitude: " + longitude)
         console.log("Accuracy: " + position.coords.accuracy)
+        console.log("Speed: " + position.coords.speed)
+        
       },
       (error) => {
         console.error("Error obtaining location", error);
