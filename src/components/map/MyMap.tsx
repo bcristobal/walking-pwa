@@ -3,12 +3,15 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import type { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import style from "./myMap.module.css";
+import L from 'leaflet';
 
 // Import components
 import { MapUpdater } from './MapUpdater';
 import { StatsPanel } from './StatsPanel';
 import { ControlButton } from './ControlButton';
 import { RouteTracker } from './RouteTracker';
+import MyMarker from './marker/MyMarker';
+
 
 // Import hooks
 import { useGPSTracking } from './useGPSTracking';
@@ -54,9 +57,9 @@ const MyMap = () => {
         
         {/* Current position marker */}
         {currentPosition && (
-          <Marker position={currentPosition}>
-            <Popup>Estás aquí</Popup>
-          </Marker>
+          <MyMarker position={currentPosition}>
+
+          </MyMarker>
         )}
       </MapContainer>
       
