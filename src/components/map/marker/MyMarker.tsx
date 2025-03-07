@@ -8,7 +8,7 @@ interface MyMarkerProps {
 }
 
 var icon = L.icon({
-  iconUrl: "public/blue_point.png",
+  iconUrl: "blue_point.png",
   iconSize: [20, 20],
   iconAnchor: [10, 10]
 })
