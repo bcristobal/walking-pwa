@@ -1,0 +1,106 @@
+import React, { useState } from 'react';
+import styles from './loginForm.module.css';
+
+const apiUrl = "http://127.0.0.1:8000"
+
+interface LoginFormProps {
+  onLoginSuccess: (token: string) => void;
+}
+
+const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(apiUrl+'/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'accept': 'application/json'
+        },
+        body: new URLSearchParams({
+          'username': username,
+          'password': password,
+          'scope': '',
+          'client_id': '',
+          'client_secret': ''
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Credenciales incorrectas');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('authToken', data.access_token);
+      onLoginSuccess(data.access_token);
+
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.loginContainer}>
+      <div className={styles.loginBox}>
+        <h2 className={styles.loginTitle}>Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit} className={styles.loginForm}>
+          {error && <div className={styles.errorMessage}>{error}</div>}
+          
+          <div className={styles.inputGroup}>
+            <label htmlFor="username">Usuario</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className={styles.input}
+            />
+          </div>
+          
+          <button 
+            type="submit" 
+            className={styles.loginButton}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Cargando...' : 'Entrar'}
+          </button>
+          
+          <div className={styles.loginFooter}>
+            <a href="#recuperar" className={styles.forgotPassword}>
+              ¿Olvidaste tu contraseña?
+            </a>
+            <a href="#registrarse" className={styles.registerLink}>
+              ¿No tienes cuenta? Regístrate
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default LoginForm;

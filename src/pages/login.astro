@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LoginForm from "../components/login/LoginForm"
+---
+
+<Layout>
+    <a href="/">&lt</a>
+    <LoginForm client:load onLoginSuccess={(token) => {
+        window.location.href = '/map';
+      }} />
+</Layout>

@@ -2,10 +2,13 @@
 
 import LayoutMap from "../../layouts/LayoutMap.astro";
 import MyMap  from "../../components/map/MyMap";
+import ProtectedRoute from "../../components/auth/ProtectedRoute";
 ---
 
 <LayoutMap>
-    <MyMap client:only="react"></MyMap>
+    <ProtectedRoute client:load>
+        <MyMap client:only="react"/>
+    </ProtectedRoute>
 </LayoutMap>
     
 
