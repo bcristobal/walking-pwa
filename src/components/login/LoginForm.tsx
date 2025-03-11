@@ -4,10 +4,10 @@ import styles from './loginForm.module.css';
 const apiUrl = "http://127.0.0.1:8000"
 
 interface LoginFormProps {
-  onLoginSuccess: (token: string) => void;
+  
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+const LoginForm: React.FC<LoginFormProps> = ({}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +17,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
+    
 
     try {
       const response = await fetch(apiUrl+'/token', {
@@ -41,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
       const data = await response.json();
       localStorage.setItem('authToken', data.access_token);
-      onLoginSuccess(data.access_token);
+      window.location.href = "/map"
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
@@ -51,7 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className={styles.loginContainer}>
+    
       <div className={styles.loginBox}>
         <h2 className={styles.loginTitle}>Iniciar Sesión</h2>
         <form onSubmit={handleSubmit} className={styles.loginForm}>
@@ -99,7 +100,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           </div>
         </form>
       </div>
-    </div>
+    
   );
 };
 

@@ -1,19 +1,12 @@
-.loginContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f5f5f5;
-    padding: 20px;
-  }
-  
-  .loginBox {
+    .loginBox {
     background: white;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    padding: 30px;
+    padding: 40px;
+    margin-inline: auto;
+    margin-top: 100px;
   }
   
   .loginTitle {
@@ -48,6 +41,8 @@
     border-radius: 6px;
     font-size: 16px;
     transition: border-color 0.3s;
+    max-width: 368px;
+    
   }
   
   .input:focus {
