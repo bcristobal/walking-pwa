@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Credenciales incorrectas');
+        throw new Error(errorData.message || 'Usuario o contraseña incorrecta');
       }
 
       const data = await response.json();
@@ -91,9 +91,6 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
           </button>
           
           <div className={styles.loginFooter}>
-            <a href="#recuperar" className={styles.forgotPassword}>
-              ¿Olvidaste tu contraseña?
-            </a>
             <a href="#registrarse" className={styles.registerLink}>
               ¿No tienes cuenta? Regístrate
             </a>

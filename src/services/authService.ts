@@ -59,8 +59,11 @@ export class AuthService {
      */
     static isTokenExpired(): boolean {
       const tokenData = this.getTokenData();
-      if (!tokenData || !tokenData.exp) return true;
-      
+      if (!tokenData) return true;
+  
+      // Si no hay campo exp, asumimos que el token no expira
+      if (!tokenData.exp) return false;
+  
       // Exp está en segundos, Date.now() en milisegundos
       const expirationTime = tokenData.exp * 1000;
       return Date.now() >= expirationTime;

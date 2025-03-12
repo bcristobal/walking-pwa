@@ -11,23 +11,35 @@ interface ProtectedRouteProps {
  */
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  
+
   useEffect(() => {
-    // Verificar autenticación
-    if (!AuthService.isAuthenticated() || AuthService.isTokenExpired()) {
-      // Redirigir al login
-      window.location.href = '/login';
-    } else {
+    // Verificar autenticación de forma asíncrona
+    const checkAuth = () => {
+      if (!AuthService.isAuthenticated()) {
+        window.location.href = '/login';
+        return;
+      }
+      
+      // Si hay token, verificar si ha expirado
+      if (AuthService.isTokenExpired()) {
+        AuthService.logout(); // Limpiar el token expirado
+        window.location.href = '/login';
+        return;
+      }
+      
+      // Si llegamos aquí, el usuario está autenticado
       setIsAuthenticated(true);
-    }
+    };
+    
+    checkAuth();
   }, []);
   
-  // Mostrar nada mientras se verifica la autenticación
+  // Mostrar un loader mientras se verifica la autenticación
   if (isAuthenticated === null) {
     return <div>Cargando...</div>;
   }
   
-  // Renderizar el contenido protegido si está autenticado
+  // Renderizar el contenido protegido
   return <>{children}</>;
 };
 
