@@ -36,7 +36,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   
   // Mostrar un loader mientras se verifica la autenticación
   if (isAuthenticated === null) {
-    return <div>Cargando...</div>;
+    return <div></div>;
   }
   
   // Renderizar el contenido protegido

@@ -1,0 +1,15 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import NavBar from '../../components/navBar/NavBar'
+import ProtectedRoute from '../../components/auth/ProtectedRoute'
+import ChallengeCard from '../../components/challengeCard/ChallengeCard'
+import ChallengeSection from '../../challengeSection/ChallengeSection'
+
+---
+
+<Layout>
+    <ProtectedRoute client:load>
+        
+        <NavBar defaultActive='challenge' />
+    </ProtectedRoute>
+</Layout>
