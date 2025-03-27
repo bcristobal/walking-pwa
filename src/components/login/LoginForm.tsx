@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styles from './loginForm.module.css';
+import { AuthService } from '../../services/authService';
 
-const apiUrl = "http://127.0.0.1:8000"
+const apiUrl = "http://127.0.0.1:8000/gamification-api";
 
 interface LoginFormProps {
   
@@ -41,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
       }
 
       const data = await response.json();
-      localStorage.setItem('authToken', data.access_token);
+      AuthService.setToken(data.access_token);
       window.location.href = "/map"
 
     } catch (err) {
