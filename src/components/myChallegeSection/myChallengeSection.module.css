@@ -1,0 +1,156 @@
+.challenge_section {
+    padding: 24px 16px 100px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .section_header {
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  .section_title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  
+  .section_description {
+    font-size: 1.1rem;
+    color: #4b5563;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  .challenges_grid {
+    display: flexbox;
+    
+    margin-top: 36px;
+  }
+  
+  .loading_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    gap: 16px;
+    color: #6b7280;
+  }
+  
+  .loading_spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #8b5cf6;
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .error_state {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background-color: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  
+  .error_message {
+    color: #ef4444;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .retry_button {
+    padding: 10px 20px;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .retry_button:hover {
+    background-color: #dc2626;
+  }
+  
+  .empty_state {
+    text-align: center;
+    padding: 40px 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background-color: rgba(139, 92, 246, 0.05);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+  
+  .empty_message {
+    color: #6b7280;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+  }
+  
+  .browse_button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .browse_button:hover {
+    background-color: #7c3aed;
+  }
+  
+
+  
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .challenges_grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .section_title {
+      font-size: 1.75rem;
+    }
+    
+    .section_description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .challenge_section {
+      padding: 16px 12px 90px;
+    }
+    
+    .challenges_grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .section_title {
+      font-size: 1.5rem;
+    }
+  }

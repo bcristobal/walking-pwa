@@ -1,5 +1,5 @@
 export class GamificationService {
-    private static API_URL = 'http://127.0.0.1:8000/gamification-api/games/walking-pwa'
+    private static  API_URL = 'http://127.0.0.1:8000/gamification-api/games/walking-pwa'
 
     static fetchChallenges = async (token: string, skip: number, limit: number, status: string) => {
         try {
@@ -10,6 +10,11 @@ export class GamificationService {
                     'accept': 'application/json'
                 }
             });
+            
+            if (!availableChallengesResponse.ok) {
+                throw new Error(`Error en la respuesta del servidor: ${availableChallengesResponse.status} ${availableChallengesResponse.statusText}`);
+            }
+            
             const availableChallengesData = await availableChallengesResponse.json();
             return availableChallengesData;
                 
@@ -20,20 +25,45 @@ export class GamificationService {
     };
 
 
-    static fetchMyChallenges = async (token: String) => {
+    static fetchMyChallenges = async (token: string) => {
         try {
-            const availableChallengesResponse = await fetch(GamificationService.API_URL+'/my-challenges', {
+            console.log('Iniciando fetchMyChallenges...');
+            
+            const response = await fetch('http://127.0.0.1:8000/gamification-api/games/walking-pwa/my-challenges', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'accept': 'application/json'
                 }
             });
-            const availableChallengesData = await availableChallengesResponse.json();
-            return availableChallengesData;
+            
+            console.log('Respuesta recibida, estado:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`Error en la respuesta del servidor: ${response.status} ${response.statusText}`);
+            }
+            
+            // Clone la respuesta para poder verla y usarla
+            const clonedResponse = response.clone();
+            
+            // Intenta leer el texto original para depuración
+            const responseText = await clonedResponse.text();
+            console.log('Respuesta texto:', responseText.substring(0, 200) + '...');
+            
+            let data;
+            try {
+                // Convertir el texto a JSON
+                data = JSON.parse(responseText);
+            } catch (jsonError) {
+                console.error('Error al parsear JSON:', jsonError);
+                throw new Error(`Error al parsear la respuesta JSON: ${jsonError instanceof Error ? jsonError.message : 'Error desconocido'}`);
+            }
+            
+            console.log('Datos parseados correctamente');
+            return data;
                 
         } catch (error) {
-            console.error(`Error fetching available challenges: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            console.error(`Error fetching my challenges: ${error instanceof Error ? error.message : 'Unknown error'}`);
             throw error;
         }
     };
@@ -62,6 +92,4 @@ export class GamificationService {
             throw error;
         };
     }
-        
-    
 }
