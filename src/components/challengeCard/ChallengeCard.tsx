@@ -7,7 +7,7 @@ interface ChallengeCardProps {
     description: string;
     start_date: string;
     finish_date: string;
-    points: number;
+    points: string;
 }
 
 export default function ChallengeCard({id, name, type, description, start_date, finish_date, points}: ChallengeCardProps) {

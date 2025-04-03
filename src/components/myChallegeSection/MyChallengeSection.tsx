@@ -12,6 +12,7 @@ interface Challenge {
   start_date: string;
   finish_date: string;
   points: number;
+  total_points: number;
 }
 
 export default function MyChallengeSection() {
@@ -74,6 +75,9 @@ export default function MyChallengeSection() {
 
   return (
     <div className={styles.challenge_section}>
+  
+      <a className={styles.new_challenge_button} href="/challenges/add">Nuevos desafíos</a>
+      
       <div className={styles.section_header}>
         <h1 className={styles.section_title}>Mis Desafíos</h1>
         <p className={styles.section_description}>
@@ -126,7 +130,7 @@ export default function MyChallengeSection() {
               description={challenge.description || 'Sin descripción'}
               start_date={formatDate(challenge.start_date || '')}
               finish_date={formatDate(challenge.finish_date || '')}
-              points={challenge.points || 0}
+              points={`${challenge.total_points} / ${challenge.points}`}
             />
           );
         })}
