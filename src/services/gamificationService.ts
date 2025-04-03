@@ -92,4 +92,30 @@ export class GamificationService {
             throw error;
         };
     }
+
+
+    static addPoints = async (token: string, challengeId: string, participation_id: string, points: number) => {
+        try {
+            const response = await fetch(`${GamificationService.API_URL}/challenges/${challengeId}/participations/${participation_id}/points`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "points": points
+                }),
+            });
+            if (!response.ok) {
+                throw new Error(`Error adding points: ${response.statusText}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error(`Error adding points: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            throw error;
+        };
+    }
+
 }

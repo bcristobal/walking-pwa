@@ -17,7 +17,7 @@ import MyMarker from './marker/MyMarker';
 import { useGPSTracking } from './useGPSTracking';
 import { useTimer } from './useTimer';
 
-const MyMap = () => {
+const MyMap = (participation_id: string, challenge_id: string) => {
   const [isTracking, setIsTracking] = useState(false);
   const { currentPosition, positionHistory, totalDistance, resetTracking } = useGPSTracking(isTracking);
   const { elapsedTime, resetTimer } = useTimer(isTracking);

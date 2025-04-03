@@ -43,7 +43,7 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
       const data = await response.json();
       AuthService.setToken(data.access_token);
-      window.location.href = "/map"
+      window.location.href = "/home"
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
