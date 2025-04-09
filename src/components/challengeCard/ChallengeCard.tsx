@@ -23,7 +23,7 @@ export default function ChallengeCard({id, name, type, description, start_date, 
 
   return (
     <div className={styles.challenge_card}>
-        <a href={`#/${id}`}>
+        <a href={`/map/#/${id}`}>
             <div className={`${styles.card_header} ${getTypeColor()}`}>
                 <div className={styles.header_content}>
                     <h2 className={styles.challenge_title}>{name}</h2>
