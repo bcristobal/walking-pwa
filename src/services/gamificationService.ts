@@ -95,6 +95,7 @@ export class GamificationService {
 
 
     static addPoints = async (token: string, challengeId: string, participation_id: string, points: number) => {
+        console.log('Iniciando addPoints...');
         try {
             const response = await fetch(`${GamificationService.API_URL}/challenges/${challengeId}/participations/${participation_id}/points`, {
                 method: 'POST',
@@ -104,7 +105,7 @@ export class GamificationService {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "points": points
+                    "points": points 
                 }),
             });
             if (!response.ok) {

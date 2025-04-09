@@ -13,6 +13,7 @@ interface Challenge {
   finish_date: string;
   points: number;
   total_points: number;
+  participation_id: string;
 }
 
 export default function MyChallengeSection() {
@@ -131,6 +132,7 @@ export default function MyChallengeSection() {
               start_date={formatDate(challenge.start_date || '')}
               finish_date={formatDate(challenge.finish_date || '')}
               points={`${challenge.total_points} / ${challenge.points}`}
+              participation_id={challenge.participation_id || '0'}
             />
           );
         })}

@@ -1,0 +1,15 @@
+---
+// src/pages/map/[challengeId]/[participationId].astro
+import LayoutMap from "../../../layouts/LayoutMap.astro";
+import ProtectedRoute from "../../../components/auth/ProtectedRoute";
+import ChallengeMapPage from "../../../components/challengeMap/ChallengeMapPage"; // You'll need to create this component
+
+const { challengeId, participationId } = Astro.params;
+export const prerender = false;
+---
+
+<LayoutMap>
+    <ProtectedRoute client:load>
+        <ChallengeMapPage client:only="react" />
+    </ProtectedRoute>
+</LayoutMap>

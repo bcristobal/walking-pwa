@@ -8,9 +8,10 @@ interface ChallengeCardProps {
     start_date: string;
     finish_date: string;
     points: string;
+    participation_id: string;
 }
 
-export default function ChallengeCard({id, name, type, description, start_date, finish_date, points}: ChallengeCardProps) {
+export default function ChallengeCard({id, name, type, description, start_date, finish_date, points, participation_id}: ChallengeCardProps) {
   // Determinar el color del tipo de desafío para usar en múltiples lugares
   const getTypeColor = () => {
     switch(type.toLowerCase()) {
@@ -23,7 +24,7 @@ export default function ChallengeCard({id, name, type, description, start_date, 
 
   return (
     <div className={styles.challenge_card}>
-        <a href={`/map/#/${id}`}>
+        <a href={`/map/${id}/${participation_id}`}>
             <div className={`${styles.card_header} ${getTypeColor()}`}>
                 <div className={styles.header_content}>
                     <h2 className={styles.challenge_title}>{name}</h2>

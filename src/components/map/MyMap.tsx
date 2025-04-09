@@ -12,13 +12,18 @@ import { ControlButton } from './ControlButton';
 import { RouteTracker } from './RouteTracker';
 import MyMarker from './marker/MyMarker';
 
-
 // Import hooks
 import { useGPSTracking } from './useGPSTracking';
 import { useTimer } from './useTimer';
 import { GamificationService } from '../../services/gamificationService';
+import { AuthService } from '../../services/authService';
 
-const MyMap = (participation_id: string, challenge_id: string) => {
+interface MyMapProps {
+  participation_id: string;
+  challenge_id: string;
+}
+
+const MyMap = ({ participation_id, challenge_id }: MyMapProps) => {
   const [isTracking, setIsTracking] = useState(false);
   const { currentPosition, positionHistory, totalDistance, resetTracking } = useGPSTracking(isTracking);
   const { elapsedTime, resetTimer } = useTimer(isTracking);
@@ -31,13 +36,14 @@ const MyMap = (participation_id: string, challenge_id: string) => {
     if (isTracking) {
       // Stop tracking
       setIsTracking(false);
+      const token: string = AuthService.getToken() || '';
       GamificationService.addPoints(
-        localStorage.getItem('token') || '',
+        token,
         challenge_id,
         participation_id,
-        Math.round(totalDistance)
+        Math.round(totalDistance * 100) // Convert to points
       )
-      window.location.href = '/home';
+      // window.location.href = '/home';
     } else {
       // Start tracking
       setIsTracking(true);

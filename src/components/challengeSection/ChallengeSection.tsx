@@ -177,6 +177,7 @@ export default function ChallengeSection() {
               start_date={formatDate(challenge.start_date || '')}
               finish_date={formatDate(challenge.finish_date || '')}
               points={`${challenge.points}`}
+              participation_id={challenge.id} // Cambiado para usar el ID del desafío
             />
             <button 
               className={styles.accept_button}
