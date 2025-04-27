@@ -2,12 +2,13 @@
 import Layout from '../../layouts/Layout.astro'
 import NavBar from '../../components/navBar/NavBar'
 import ProtectedRoute from '../../components/auth/ProtectedRoute'
+import ClassificationSection from '../../components/clasification/ClasificationSection'
 
 ---
 
 <Layout>
     <ProtectedRoute client:load>
-        This is CLASIFICATION
+        <ClassificationSection client:load />
         <NavBar defaultActive='clasification' />
     </ProtectedRoute>
 	

@@ -119,4 +119,49 @@ export class GamificationService {
         };
     }
 
+    static fetchClassification = async () => {
+        console.log('Iniciando fetchClassification...');
+        try {
+            const response = await fetch(`${GamificationService.API_URL}/leaderboard`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`Error en la respuesta del servidor: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log('Datos de clasificación:', data);
+            return data;
+        } catch (error) {
+            console.error(`Error fetching classification: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            throw error;
+        }
+    };
+
+
+    static fetchUserData = async (token: string) => {
+        console.log('Iniciando fetchUserData...');
+        try {
+            const response = await fetch(`${GamificationService.API_URL}/users/me/stats`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'accept': 'application/json'
+                }
+            });
+            if (!response.ok) {
+                throw new Error(`Error en la respuesta del servidor: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log('Datos de usuario:', data);
+            return data;
+        } catch (error) {
+            console.error(`Error fetching user data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            throw error;
+        }
+    };
+
+
 }

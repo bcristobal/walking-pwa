@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AuthService } from '../../services/authService';
 import { GamificationService } from '../../services/gamificationService';
-import ChallengeCard from '../challengeCard/ChallengeCard';
+import AddChallengeCard from '../addChallengeCard/AddChallengeCard';
 import styles from './challengeSection.module.css';
 
 interface Challenge {
@@ -28,7 +28,7 @@ export default function ChallengeSection() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [status, setStatus] = useState<string>('active');
+  const [status, setStatus] = useState<string>('ongoing'); // Estado inicial para los filtros
   const limit = 6;
 
   useEffect(() => {
@@ -46,6 +46,7 @@ export default function ChallengeSection() {
         return;
       }
       
+      // Ensure we're passing the correct parameters to the service
       const response = await GamificationService.fetchChallenges(token, page * limit, limit, status);
       console.log('Challenges response:', response);
       
@@ -70,22 +71,32 @@ export default function ChallengeSection() {
 
   const handleAcceptChallenge = async (challengeId: string) => {
     try {
-      setLoading(true);
       const token = AuthService.getToken();
       
       if (!token) {
         setError('No estás autenticado');
-        setLoading(false);
         return;
       }
       
-      await GamificationService.acceptChallenge(token, challengeId);
-      // Refrescar la lista después de aceptar un desafío
-      fetchChallenges();
+      setLoading(true);
       
+      // Proper error handling for the accept challenge call
+      try {
+        await GamificationService.acceptChallenge(token, challengeId);
+        window.location.href = '/challenges';
+        // Success notification could be added here
+      } catch (acceptError) {
+        console.error('Error en GamificationService.acceptChallenge:', acceptError);
+        setError(`Error al aceptar el desafío: ${acceptError instanceof Error ? acceptError.message : 'Error desconocido'}`);
+        return; // Return early if there's an error
+      }
+      
+      // Refrescar la lista después de aceptar un desafío
+      await fetchChallenges();
     } catch (err) {
-      console.error('Error al aceptar el desafío:', err);
-      setError(`Error al aceptar el desafío: ${err instanceof Error ? err.message : 'Error desconocido'}`);
+      console.error('Error al procesar la aceptación del desafío:', err);
+      setError(`Error al procesar la solicitud: ${err instanceof Error ? err.message : 'Error desconocido'}`);
+    } finally {
       setLoading(false);
     }
   };
@@ -122,8 +133,8 @@ export default function ChallengeSection() {
 
       <div className={styles.filters}>
         <button 
-          className={`${styles.filter_button} ${status === 'active' ? styles.active : ''}`}
-          onClick={() => handleStatusChange('active')}
+          className={`${styles.filter_button} ${status === 'ongoing' ? styles.active : ''}`}
+          onClick={() => handleStatusChange('ongoing')}
         >
           Activos
         </button>
@@ -134,10 +145,10 @@ export default function ChallengeSection() {
           Próximos
         </button>
         <button 
-          className={`${styles.filter_button} ${status === 'completed' ? styles.active : ''}`}
-          onClick={() => handleStatusChange('completed')}
+          className={`${styles.filter_button} ${status === 'past' ? styles.active : ''}`}
+          onClick={() => handleStatusChange('past')}
         >
-          Completados
+          Pasados
         </button>
       </div>
 
@@ -153,7 +164,10 @@ export default function ChallengeSection() {
           <p className={styles.error_message}>{error}</p>
           <button 
             className={styles.retry_button}
-            onClick={() => fetchChallenges()}
+            onClick={() => {
+              setError(null);
+              fetchChallenges();
+            }}
           >
             Intentar nuevamente
           </button>
@@ -169,7 +183,7 @@ export default function ChallengeSection() {
       <div className={styles.challenges_grid}>
         {challenges.map((challenge) => (
           <div key={challenge.id} className={styles.challenge_card_container}>
-            <ChallengeCard
+            <AddChallengeCard
               id={challenge.id}
               name={challenge.name || 'Sin nombre'}
               type={challenge.type || 'individual'}
@@ -177,14 +191,9 @@ export default function ChallengeSection() {
               start_date={formatDate(challenge.start_date || '')}
               finish_date={formatDate(challenge.finish_date || '')}
               points={`${challenge.points}`}
-              participation_id={challenge.id} // Cambiado para usar el ID del desafío
+              onAddChallenge={handleAcceptChallenge}
+              status={status} // Pass the current status to the component
             />
-            <button 
-              className={styles.accept_button}
-              onClick={() => handleAcceptChallenge(challenge.id)}
-            >
-              Participar
-            </button>
           </div>
         ))}
       </div>

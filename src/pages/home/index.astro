@@ -2,12 +2,13 @@
 import Layout from '../../layouts/Layout.astro'
 import NavBar from '../../components/navBar/NavBar'
 import ProtectedRoute from '../../components/auth/ProtectedRoute'
+import WelcomeComponent from '../../components/home/WelcomeComponent'
 
 ---
 
 <Layout>
 	<ProtectedRoute client:load>
-        This is HOME
+        <WelcomeComponent />
         <NavBar defaultActive='home' />
     </ProtectedRoute>
 </Layout>

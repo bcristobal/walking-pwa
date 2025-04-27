@@ -1,0 +1,248 @@
+/* addChallengeCard.module.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .challenge_card {
+    width: 100%;
+    max-width: 350px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin: 20px;
+    margin-inline: auto;
+    border: none;
+    position: relative;
+  }
+  
+  .challenge_card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  }
+  
+  .card_header {
+    position: relative;
+    padding: 28px 24px 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  }
+  
+  .header_content {
+    position: relative;
+  }
+  
+  .header_content::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 0;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: currentColor;
+    opacity: 0.9;
+  }
+  
+  .challenge_title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #1a202c;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  
+  .challenge_type {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+    opacity: 0.65;
+  }
+  
+  .card_body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .challenge_description {
+    color: #4b5563;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    height: 4.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  
+  .challenge_metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .date_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  
+  .date_group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .date_divider {
+    width: 12px;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.15);
+    margin: 0 8px;
+  }
+  
+  .date_label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .date_value {
+    font-size: 1.05rem;
+    color: #1f2937;
+    font-weight: 500;
+  }
+  
+  .footer_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .points_wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .points_label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #6b7280;
+  }
+  
+  .points_value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  
+  .buttons_container {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  
+  .add_button, 
+  .view_details_button {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .view_details_button {
+    background-color: #f3f4f6;
+    border: none;
+    color: #4b5563;
+  }
+  
+  .view_details_button:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .add_button {
+    background-color: currentColor;
+    border: none;
+    color: white;
+  }
+  
+  .add_button svg,
+  .add_button span {
+    color: white;
+  }
+  
+  .add_button:hover {
+    filter: brightness(1.1);
+  }
+  
+  /* Type-specific colors */
+  .color_individual {
+    color: #8b5cf6;
+  }
+  
+  .color_collaborative {
+    color: #10b981;
+  }
+  
+  .color_competitive {
+    color: #ef4444;
+  }
+  
+  .color_other {
+    color: #f59e0b;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .challenge_card {
+      max-width: 100%;
+    }
+    
+    .card_header {
+      padding: 24px 20px 20px;
+    }
+    
+    .card_body {
+      padding: 20px;
+    }
+    
+    .date_label {
+      font-size: 0.7rem;
+    }
+    
+    .date_value {
+      font-size: 1rem;
+    }
+    
+    .points_value {
+      font-size: 1.2rem;
+    }
+    
+    .buttons_container {
+      flex-direction: column;
+    }
+  }
