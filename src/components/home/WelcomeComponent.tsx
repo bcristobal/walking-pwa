@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './welcomeComponent.module.css';
+import { GamificationService } from '../../services/gamificationService';
+import { AuthService } from '../../services/authService';
 
 interface UserData {
   username: string;
@@ -17,20 +19,43 @@ interface UserData {
 
 export default function WelcomeComponent() {
   const [userData, setUserData] = useState<UserData>({
-    username: "admin",
-    total_xp: 1300,
-    total_points: 1300,
-    streak_days: 1,
-    current_level: 2,
-    level_name: "Novice",
-    xp_for_next_level: 1700,
-    total_challenges: 5,
-    completed_challenges: 4,
-    completion_rate: 80,
-    last_activity: "2025-04-25T19:13:11.211182"
+    username: "",
+    total_xp: 0,
+    total_points: 0,
+    streak_days: 0,
+    current_level: 0,
+    level_name: "",
+    xp_for_next_level: 0,
+    total_challenges: 0,
+    completed_challenges: 0,
+    completion_rate: 0,
+    last_activity: ""
   });
+  
+  useEffect(() => {
+    const fetchUser = async () => {
+        try {
+            console.log('Starting fetchUser function');
+            const token = AuthService.getToken();
+            console.log('Token retrieved:', token ? 'Token exists' : 'No token found');
+            if (!token) {
+                throw new Error('Authentication token is missing');
+            }
+            console.log('About to call GamificationService.fetchUserData');
+            const data = await GamificationService.fetchUserData(token);
+            console.log('Data received from fetchUserData:', data);
+            setUserData(data);
+        } catch (error) {
+            console.error('Error in fetchUser:', error);
+        }
+    };
+    
+    fetchUser();
+}, []);
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    
     const date = new Date(dateString);
     return date.toLocaleDateString('es-ES', {
       year: 'numeric',
@@ -42,13 +67,18 @@ export default function WelcomeComponent() {
   };
 
   const calculateXpProgress = () => {
+    if (userData.xp_for_next_level === 0) return 0;
     const progressPercentage = (userData.total_xp / userData.xp_for_next_level) * 100;
     return Math.min(progressPercentage, 100);
   };
 
   const calculateChallengeProgress = () => {
+    if (userData.total_challenges === 0) return 0;
     return (userData.completed_challenges / userData.total_challenges) * 100;
   };
+
+
+
 
   return (
     <div className={styles.welcome_container}>
@@ -109,9 +139,9 @@ export default function WelcomeComponent() {
               <div className={styles.completion_info}>
                 <div>
                   <p className={styles.completion_title}>Tasa de Finalización</p>
-                  <p className={styles.completion_subtitle}>Has completado el {userData.completion_rate}% de los retos</p>
+                  <p className={styles.completion_subtitle}>Has completado el {Math.round(userData.completion_rate)}% de los retos</p>
                 </div>
-                <div className={styles.completion_rate}>{userData.completion_rate}%</div>
+                <div className={styles.completion_rate}>{Math.round(userData.completion_rate)}%</div>
               </div>
             </div>
             

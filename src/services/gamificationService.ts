@@ -105,7 +105,7 @@ export class GamificationService {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "points": points 
+                    "points": points + 50
                 }),
             });
             if (!response.ok) {
@@ -144,7 +144,7 @@ export class GamificationService {
     static fetchUserData = async (token: string) => {
         console.log('Iniciando fetchUserData...');
         try {
-            const response = await fetch(`${GamificationService.API_URL}/users/me/stats`, {
+            const response = await fetch(`http://127.0.0.1:8000/gamification-api/users/me/stats`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
