@@ -1,4 +1,4 @@
-.loginBox {
+.registerBox {
   max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
@@ -7,14 +7,14 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.loginTitle {
+.registerTitle {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #333;
   font-size: 1.5rem;
 }
 
-.loginForm {
+.registerForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -44,7 +44,7 @@
   outline: none;
 }
 
-.loginButton {
+.registerButton {
   margin-top: 1rem;
   padding: 0.75rem;
   background-color: #007bff;
@@ -56,32 +56,40 @@
   transition: background-color 0.3s;
 }
 
-.loginButton:hover {
+.registerButton:hover {
   background-color: #0056b3;
 }
 
-.loginButton:disabled {
+.registerButton:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
 }
 
-.loginFooter {
+.registerFooter {
   margin-top: 1rem;
   text-align: center;
 }
 
-.registerLink {
+.loginLink {
   color: #007bff;
   text-decoration: none;
 }
 
-.registerLink:hover {
+.loginLink:hover {
   text-decoration: underline;
 }
 
 .errorMessage {
   background-color: #ffebee;
   color: #d32f2f;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.successMessage {
+  background-color: #e8f5e9;
+  color: #2e7d32;
   padding: 0.75rem;
   border-radius: 4px;
   margin-bottom: 1rem;

@@ -19,7 +19,6 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
     setIsLoading(true);
     setError(null);
     
-
     try {
       const response = await fetch(apiUrl+'/token', {
         method: 'POST',
@@ -53,52 +52,50 @@ const LoginForm: React.FC<LoginFormProps> = ({}) => {
   };
 
   return (
-    
-      <div className={styles.loginBox}>
-        <h2 className={styles.loginTitle}>Iniciar Sesión</h2>
-        <form onSubmit={handleSubmit} className={styles.loginForm}>
-          {error && <div className={styles.errorMessage}>{error}</div>}
-          
-          <div className={styles.inputGroup}>
-            <label htmlFor="username">Usuario</label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          
-          <div className={styles.inputGroup}>
-            <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          
-          <button 
-            type="submit" 
-            className={styles.loginButton}
-            disabled={isLoading}
-          >
-            {isLoading ? 'Cargando...' : 'Entrar'}
-          </button>
-          
-          <div className={styles.loginFooter}>
-            <a href="#registrarse" className={styles.registerLink}>
-              ¿No tienes cuenta? Regístrate
-            </a>
-          </div>
-        </form>
-      </div>
-    
+    <div className={styles.loginBox}>
+      <h2 className={styles.loginTitle}>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit} className={styles.loginForm}>
+        {error && <div className={styles.errorMessage}>{error}</div>}
+        
+        <div className={styles.inputGroup}>
+          <label htmlFor="username">Usuario</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
+        
+        <div className={styles.inputGroup}>
+          <label htmlFor="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
+        
+        <button 
+          type="submit" 
+          className={styles.loginButton}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Cargando...' : 'Entrar'}
+        </button>
+        
+        <div className={styles.loginFooter}>
+          <a href="/register" className={styles.registerLink}>
+            ¿No tienes cuenta? Regístrate
+          </a>
+        </div>
+      </form>
+    </div>
   );
 };
 
