@@ -68,4 +68,9 @@ export class AuthService {
       const expirationTime = tokenData.exp * 1000;
       return Date.now() >= expirationTime;
     }
-  }
+
+    /**
+     * Actualiza la información del perfil del usuario
+     */
+    
+}

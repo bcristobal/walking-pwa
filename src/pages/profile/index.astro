@@ -2,12 +2,13 @@
 import Layout from '../../layouts/Layout.astro'
 import NavBar from '../../components/navBar/NavBar'
 import ProtectedRoute from '../../components/auth/ProtectedRoute'
+import ProfileSection from '../../components/profileSection/ProfileSection'
 
 ---
 
 <Layout>
 	<ProtectedRoute client:load>
-        This is PROFILE
+        <ProfileSection />
         <NavBar defaultActive='profile' />
     </ProtectedRoute>
 </Layout>

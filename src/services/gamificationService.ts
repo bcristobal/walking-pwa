@@ -164,4 +164,29 @@ export class GamificationService {
     };
 
 
+    static fetchUpdateUser = async (token: string, userData: any) => {
+        console.log('Iniciando fetchUpdateUser...');
+        try {
+            const response = await fetch(`http://127.0.0.1:8000/gamification-api/users/me`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData),
+            });
+            if (!response.ok) {
+                throw new Error(`Error en la respuesta del servidor: ${response.status} ${response.statusText}`);
+            }
+            const data = await response.json();
+            console.log('Datos de usuario actualizados:', data);
+            return data;
+        } catch (error) {
+            console.error(`Error updating user data: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            throw error;
+        }
+    };
+
+
 }

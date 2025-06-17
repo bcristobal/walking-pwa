@@ -1,0 +1,221 @@
+.profileContainer {
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+.profileBox {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  padding: 40px;
+  padding-bottom: 0px;
+  margin: 40px auto 80px auto;
+}
+
+.profileTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profileForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #eee;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #333;
+  outline: none;
+}
+
+.updateButton {
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.updateButton:hover {
+  background-color: #333;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.updateButton:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.errorMessage {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.successMessage {
+  background-color: #e8f5e8;
+  color: #2e7d2e;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .profileContainer {
+    padding: 0 10px;
+  }
+  
+  .profileBox {
+    padding: 30px 25px;
+    margin: 20px auto 60px auto;
+    max-width: calc(100% - 20px);
+  }
+  
+  .profileTitle {
+    font-size: 24px;
+    margin-bottom: 25px;
+  }
+  
+  .sectionTitle {
+    font-size: 16px;
+  }
+  
+  .section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+  }
+  
+  .input {
+    padding: 12px 15px;
+    font-size: 16px;
+  }
+  
+  .updateButton {
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileContainer {
+    padding: 0 5px;
+  }
+  
+  .profileBox {
+    padding: 25px 20px;
+    margin: 15px auto 50px auto;
+    max-width: calc(100% - 10px);
+    border-radius: 8px;
+  }
+  
+  .profileTitle {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .sectionTitle {
+    font-size: 15px;
+  }
+  
+  .inputGroup {
+    margin-bottom: 18px;
+  }
+  
+  .inputGroup label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+  
+  .input {
+    padding: 10px 12px;
+    font-size: 15px;
+  }
+  
+  .updateButton {
+    padding: 12px 18px;
+    font-size: 15px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+  }
+  
+  .sectionSubtitle {
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+  
+  .errorMessage,
+  .successMessage {
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 15px;
+  }
+}

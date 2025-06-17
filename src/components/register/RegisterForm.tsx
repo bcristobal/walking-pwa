@@ -9,69 +9,59 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
-  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const validateForm = () => {
-    if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
-      return false;
-    }
-    
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      setError('Por favor ingresa un email válido');
-      return false;
-    }
-    
-    return true;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
     setSuccess(null);
-    
-    if (!validateForm()) {
+
+    // Validate password confirmation
+    if (password !== confirmPassword) {
+      setError('Las contraseñas no coinciden');
       setIsLoading(false);
       return;
     }
 
     try {
-      // Primero registrar al usuario
-      const registerResponse = await fetch(`${apiUrl}/users`, {
+      // Create user registration request
+      const response = await fetch(`${apiUrl}/users/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'accept': 'application/json'
         },
         body: JSON.stringify({
-          "email": email,
-          "username": username,
-          "password": password
+          email: email,
+          username: username,
+          password: password
         })
       });
 
-      if (!registerResponse.ok) {
-        let errorMessage = 'Error al registrar usuario';
-        try {
-          const errorData = await registerResponse.json();
-          errorMessage = errorData?.detail || errorData?.message || errorMessage;
-        } catch (jsonError) {
-          // Si no podemos parsear el JSON, mantenemos el mensaje de error genérico
-        }
-        throw new Error(errorMessage);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Error al registrar usuario');
       }
 
-      setSuccess('Usuario registrado correctamente. Iniciando sesión...');
+      const userData = await response.json();
+      setSuccess('¡Usuario registrado exitosamente! Ya puedes iniciar sesión.');
       
-      // Después obtener el token de acceso
+      // Clear form
+      setEmail('');
+      setUsername('');
+      setPassword('');
+      setConfirmPassword('');
+      
+      // Optionally auto-login after successful registration
+      // You can uncomment this section if you want to automatically log in the user
+      /*
       const loginResponse = await fetch(`${apiUrl}/token`, {
         method: 'POST',
         headers: {
@@ -87,28 +77,31 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
         })
       });
 
-      if (!loginResponse.ok) {
-        let errorMessage = 'Usuario registrado pero error al iniciar sesión';
-        try {
-          const errorData = await loginResponse.json();
-          errorMessage = errorData?.detail || errorData?.message || errorMessage;
-        } catch (jsonError) {
-          // Si no podemos parsear el JSON, mantenemos el mensaje de error genérico
-        }
-        throw new Error(errorMessage);
+      if (loginResponse.ok) {
+        const loginData = await loginResponse.json();
+        AuthService.setToken(loginData.access_token);
+        window.location.href = "/home";
       }
-
-      const data = await loginResponse.json();
-      AuthService.setToken(data.access_token);
-      window.location.href = "/home";
+      */
 
     } catch (err) {
-      console.error('Error durante el registro:', err);
-      setError(err instanceof Error ? err.message : 'Error en el proceso de registro');
+      setError(err instanceof Error ? err.message : 'Error al registrar usuario');
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <div className={styles.loginBox}>
+        <h2 className={styles.loginTitle}>¡Registro Exitoso!</h2>
+        <p>Tu cuenta ha sido creada correctamente.</p>
+        <a href="/login" className={styles.registerLink}>
+          Ir a Iniciar Sesión
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.registerBox}>

@@ -4,6 +4,17 @@ import LoginForm from "../components/login/LoginForm"
 ---
 
 <Layout>
-    <a href="/">&lt</a>
+    <a href="/" class="back-button">&lt;</a>
     <LoginForm client:load></LoginForm>
 </Layout>
+
+<style>
+    .back-button {
+        display: inline-block;
+        margin: 1rem;
+        text-decoration: none;
+        color: #333;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+</style>
