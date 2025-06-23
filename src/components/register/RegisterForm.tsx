@@ -3,7 +3,7 @@ import styles from './RegisterForm.module.css';
 import { AuthService } from '../../services/authService';
 
 // const apiUrl = "http://127.0.0.1:8000/gamification-api";
-const apiUrl = "https://gamification-api.onrender.com/";
+const apiUrl = "https://gamification-api.onrender.com";
 
 interface RegisterFormProps {
   
