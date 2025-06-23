@@ -52,53 +52,61 @@ const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
 
       const userData = await response.json();
       setSuccess('¡Usuario registrado exitosamente! Ya puedes iniciar sesión.');
-      
-      // Clear form
-      setEmail('');
-      setUsername('');
-      setPassword('');
-      setConfirmPassword('');
-      
-      // Optionally auto-login after successful registration
-      // You can uncomment this section if you want to automatically log in the user
-      /*
-      const loginResponse = await fetch(`${apiUrl}/token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'accept': 'application/json'
-        },
-        body: new URLSearchParams({
-          'username': username,
-          'password': password,
-          'scope': '',
-          'client_id': '',
-          'client_secret': ''
-        })
-      });
-
-      if (loginResponse.ok) {
-        const loginData = await loginResponse.json();
-        AuthService.setToken(loginData.access_token);
-        window.location.href = "/home";
-      }
-      */
 
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al registrar usuario');
     } finally {
       setIsLoading(false);
     }
+
+    
+
   };
+
+  React.useEffect(() => {
+    const loginAfterRegister = async () => {
+      if (success) {
+        setIsLoading(true);
+        try {
+          const response = await fetch(apiUrl + '/token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'accept': 'application/json'
+            },
+            body: new URLSearchParams({
+              'username': username,
+              'password': password,
+              'scope': '',
+              'client_id': '',
+              'client_secret': ''
+            })
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Usuario o contraseña incorrecta');
+          }
+
+          const data = await response.json();
+          AuthService.setToken(data.access_token);
+          window.location.href = "/home";
+        } catch (err) {
+          setError(err instanceof Error ? err.message : 'Error al iniciar sesión');
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    loginAfterRegister();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   if (success) {
     return (
       <div className={styles.loginBox}>
         <h2 className={styles.loginTitle}>¡Registro Exitoso!</h2>
-        <p>Tu cuenta ha sido creada correctamente.</p>
-        <a href="/login" className={styles.registerLink}>
-          Ir a Iniciar Sesión
-        </a>
+        <p>Se está iniciando la sesión</p>
       </div>
     );
   }
