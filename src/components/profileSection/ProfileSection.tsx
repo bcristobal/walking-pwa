@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './ProfileSection.module.css';
 import { AuthService } from '../../services/authService';
 
-const apiUrl = "http://127.0.0.1:8000/gamification-api";
+const apiUrl = "http://20.68.132.115:8000/";
 
 interface ProfileSectionProps {
   
@@ -18,7 +18,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  // Cargar datos del usuario al montar el componente
+  // Load user data when component mounts
   useEffect(() => {
     loadUserData();
   }, []);
@@ -28,7 +28,8 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
       const token = AuthService.getToken();
       if (!token) return;
 
-      const response = await fetch(apiUrl + '/user/profile', {
+      // Updated to use the correct endpoint
+      const response = await fetch(apiUrl + '/users/me', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -52,7 +53,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
     setError(null);
     setSuccess(null);
 
-    // Validaciones
+    // Validations
     if (newPassword && newPassword !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       setIsLoading(false);
@@ -71,18 +72,18 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
         throw new Error('No se encontró token de autenticación');
       }
 
+      // Updated payload structure to match API expectations
       const updateData: any = {
-        username: username,
-        email: email
+        username: username
       };
 
-      // Solo incluir contraseñas si se va a cambiar
+      // Only include password if it's being changed
       if (newPassword) {
-        updateData.current_password = currentPassword;
-        updateData.new_password = newPassword;
+        updateData.password = newPassword;
       }
 
-      const response = await fetch(apiUrl + '/user/profile', {
+      // Updated to use the correct endpoint
+      const response = await fetch(apiUrl + '/users/me', {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -93,7 +94,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Error al actualizar el perfil');
+        throw new Error(errorData.message || errorData.detail || 'Error al actualizar el perfil');
       }
 
       setSuccess('Perfil actualizado correctamente');
@@ -101,7 +102,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
       setNewPassword('');
       setConfirmPassword('');
 
-      // Recargar datos del usuario
+      // Reload user data
       await loadUserData();
 
     } catch (err) {
@@ -141,8 +142,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
-                className={styles.input}
+                disabled
+                className={`${styles.input} ${styles.disabledInput}`}
+                title="El email no puede ser modificado desde este formulario"
               />
             </div>
           </div>
@@ -159,6 +161,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({}) => {
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 className={styles.input}
+                placeholder="Solo requerida si cambias la contraseña"
               />
             </div>
             
