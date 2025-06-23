@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styles from './loginForm.module.css';
 import { AuthService } from '../../services/authService';
 
-const apiUrl = "http://127.0.0.1:8000/gamification-api";
+// const apiUrl = "http://127.0.0.1:8000/gamification-api";
+const apiUrl = "https://gamification-api.onrender.com/"
 
 interface LoginFormProps {
   

@@ -1,5 +1,5 @@
 export class GamificationService {
-    private static  API_URL = 'http://127.0.0.1:8000/gamification-api/games/walking-pwa'
+    private static  API_URL = 'https://gamification-api.onrender.com/games/walking-pwa'
 
     static fetchChallenges = async (token: string, skip: number, limit: number, status: string) => {
         try {
@@ -29,7 +29,7 @@ export class GamificationService {
         try {
             console.log('Iniciando fetchMyChallenges...');
             
-            const response = await fetch('http://127.0.0.1:8000/gamification-api/games/walking-pwa/my-challenges', {
+            const response = await fetch('https://gamification-api.onrender.com/games/walking-pwa/my-challenges', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -144,7 +144,7 @@ export class GamificationService {
     static fetchUserData = async (token: string) => {
         console.log('Iniciando fetchUserData...');
         try {
-            const response = await fetch(`http://127.0.0.1:8000/gamification-api/users/me/stats`, {
+            const response = await fetch(`https://gamification-api.onrender.com/users/me/stats`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -167,7 +167,7 @@ export class GamificationService {
     static fetchUpdateUser = async (token: string, userData: any) => {
         console.log('Iniciando fetchUpdateUser...');
         try {
-            const response = await fetch(`http://127.0.0.1:8000/gamification-api/users/me`, {
+            const response = await fetch(`https://gamification-api.onrender.com/users/me`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
